@@ -14,12 +14,28 @@ export function BookIndex() {
         loadBooks()
     }, [filterBy])
 
-    function loadBooks() {
-        bookService.query(filterBy)
-            .then(setBooks)
-            .catch(err => {
-                console.log('Cannot get books:', err)
-            })
+    // function loadBooks() {
+    //     bookService.query(filterBy)
+    //         .then(setBooks)
+    //         .catch(err => {
+    //             console.log('Cannot get books:', err)
+    //         })
+    // }
+    // async function loadBooks() {
+    //     let books = await bookService.query(filterBy) // מביא את הספרים מהשירות
+    //     if (!books || books.length === 0) {
+            
+    //     }
+    //     setBooks(books)
+    // }
+ 
+    async function loadBooks() {
+        try {
+            const books = await bookService.query(filterBy)
+            setBooks(books)
+        } catch (err) {
+            console.error("Error loading books:", err)
+        }
     }
 
     function onRemoveBook(bookId) {
@@ -40,9 +56,9 @@ export function BookIndex() {
     return (
         <section className="car-index">
             <BookFilter onSetFilter={onSetFilter} filterBy={filterBy} />
-            <Link to="/car/edit">Add Car</Link>
+            {/* <Link to="/book/edit">Add Book</Link> */}
             <BookList
-                BOOKS={books}
+                books={books}
                 onRemoveBook={onRemoveBook}
             />
         </section>

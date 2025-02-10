@@ -3,12 +3,12 @@ const { Routes, Route, Navigate } = ReactRouterDOM
 
 import { AppHeader } from "./cmps/AppHeader.jsx"
 import { HomePage } from "./pages/HomePage.jsx"
-import { AboutUs } from "./cmps/AboutUs.jsx";
-import { BooksIndex } from "./pages/BookIndex.jsx";
+import { AboutUs } from "./pages/AboutUs.jsx"
+import { BookIndex } from "./pages/BookIndex.jsx"
 import { BookDetails } from "./pages/BookDetails.jsx"
 
 
-export function App() {
+export function RootCmp() {
     return (
         <Router>
             <section className="app">
@@ -18,8 +18,8 @@ export function App() {
                         <Route path="/" element={<Navigate to="/HomePage" />} />
                         <Route path="/HomePage" element={<HomePage />} />
                         <Route path="/about" element={<AboutUs />} />
-                        <Route path="/book" element={<BooksIndex />} />
-                        <Route path="/book/:bookId " element={<BookDetails />} />
+                        <Route path="/book" element={<BookIndex />} />
+                        <Route path="/book/:bookId" element={<BookDetails />} />
                     </Routes>
                 </main>
             </section>
