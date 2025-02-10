@@ -1,4 +1,5 @@
 import { bookService } from "../services/book.service.js";
+import { BookLongTxt } from "../cmps/BookLongTxt.jsx"
 
 const { useState, useEffect } = React
 const { useParams, useNavigate, Link } = ReactRouterDOM
@@ -8,7 +9,7 @@ export function BookDetails() {
     const [book, setBook] = useState(null)
     const params = useParams()
     const navigate = useNavigate()
-    console.log(params);
+    // console.log(params);
     
     useEffect(() => {
         loadBook()
@@ -47,6 +48,7 @@ export function BookDetails() {
                 published Date: {book.publishedDate} {(new Date().getFullYear() - book.publishedDate) > 10 ? "-Vintage": (new Date().getFullYear() - book.publishedDate) <= 1 ? "-New": "" }
             </p>
             <button onClick={onBack}>Back</button>
+            <p><BookLongTxt txt = {book.description}/></p>
             <section>
                 <button ><Link to={`/book/${book.prevBookId}`}>Prev book</Link></button>
                 <button ><Link to={`/book/${book.nextBookId}`}>Next book</Link></button>
