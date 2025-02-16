@@ -1,0 +1,114 @@
+.books-list ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    justify-content: center;
+    gap: 10px;
+}
+
+/* .books-list ul li {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: start;
+
+    border-radius: 15px;
+    gap: 5px;
+    padding: 10px;
+    background: linear-gradient(360deg, #4070c4, #a7ffd6);
+    
+} */
+
+.books-list ul li {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+    border-radius: 15px;
+    gap: 5px;
+    padding: 10px;
+    background: linear-gradient(360deg, #72ed70, #f3f1b5);
+    /* min-height: 300px; */
+
+}
+
+.close {
+    position: absolute;
+    border-radius: 50%;
+    top: -7px;
+    right: -7px;
+    background: #63c261;
+    color: white;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    padding: 3px 5px;
+    transition: background-color 0.3s, transform 0.2s;
+
+}
+
+.close:hover {
+    background-color: #5e9b5d; 
+    transform: scale(1.1);
+}
+
+.books-list li:hover img {
+    animation: bounceIn;
+    animation-duration: 2s;
+}
+
+.book-nav {
+    margin-top: auto;
+    align-self: center;
+}
+
+.book-nav button {
+    background-color: #f3f1b5;
+    border: none;
+    padding: 2px 5px;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.book-nav button:hover {
+    background-color: #cbc996;
+    transform: scale(1.05); 
+}
+
+/* .book-nav {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%); 
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+} */
+
+/* .details-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}   */
+
+/* .details-btn {
+    position: absolute;
+    bottom: 10px; 
+    left: 50%;
+    transform: translateX(-50%); 
+    background-color: rgba(0, 0, 0, 0.6); 
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+} */
+

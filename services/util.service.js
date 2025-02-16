@@ -9,6 +9,11 @@ export function makeId(length = 6) {
     return title
 }
 
+function getRandomIntInclusive(min, max) {
+    min = Math.ceil(min)
+    max = Math.floor(max)
+    return Math.floor(Math.random() * (max - min + 1)) + min //The maximum is inclusive and the minimum is inclusive 
+}
 
 export function saveToStorage(key, value) {
     localStorage.setItem(key, JSON.stringify(value))

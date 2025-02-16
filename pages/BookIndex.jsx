@@ -1,6 +1,7 @@
 import { bookService } from "../services/book.service.js"
 import { BookFilter } from "../cmps/BookFilter.jsx"
 import { BookList } from "../cmps/BookList.jsx"
+import { BookAdd } from "../cmps/BookAdd.jsx"
 
 const { useEffect, useState } = React
 const { Link } = ReactRouterDOM
@@ -11,23 +12,9 @@ export function BookIndex() {
     const [filterBy, setFilterBy] = useState(bookService.getDefaultFilter())
 
     useEffect(() => {
+        console.log('Loading Books')
         loadBooks()
     }, [filterBy])
-
-    // function loadBooks() {
-    //     bookService.query(filterBy)
-    //         .then(setBooks)
-    //         .catch(err => {
-    //             console.log('Cannot get books:', err)
-    //         })
-    // }
-    // async function loadBooks() {
-    //     let books = await bookService.query(filterBy) // מביא את הספרים מהשירות
-    //     if (!books || books.length === 0) {
-            
-    //     }
-    //     setBooks(books)
-    // }
  
     async function loadBooks() {
         try {
@@ -54,14 +41,18 @@ export function BookIndex() {
 
     if (!books) return <div className="loader">Loading...</div>
     return (
-        <section className="car-index">
+        <div className='books-container'>
             <BookFilter onSetFilter={onSetFilter} filterBy={filterBy} />
-            {/* <Link to="/book/edit">Add Book</Link> */}
+            <Link to="/add-book" className="add-book-link">
+                <button className="add-book">Add Book</button>
+            </Link>
+
+            <h2>Books list:</h2>  
             <BookList
                 books={books}
                 onRemoveBook={onRemoveBook}
             />
-        </section>
+        </div>
     )
 
 }

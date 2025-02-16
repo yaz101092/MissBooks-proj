@@ -1,12 +1,9 @@
 export function HomePage() {
     return (
-        <main>
             <section className="HomePage">
-                <h1>
-                    Wellcome to my Miss Books App
-                </h1>
+                <h1>Home</h1>
+                <p>Wellcome to my Miss Books App</p>
             </section>
-        </main>
     )
 
 }

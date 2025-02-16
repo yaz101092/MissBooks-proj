@@ -1,10 +1,11 @@
 import { storageService } from "./async-storage.service.js"
 import { loadFromStorage, makeId, saveToStorage } from './util.service.js'
-import { books, books as defaultBooks } from "../assets/data/books.js"
+import {  books as defaultBooks } from "../assets/data/books.js"
+import axios from 'axios';
 
 
 const BOOK_KEY = 'books'
-_creatBooks()
+_createBooks()
 
 export const bookService = {
     query,
@@ -12,31 +13,45 @@ export const bookService = {
     remove,
     save,
     getEmptyBook,
-    getDefaultFilter
+    getDefaultFilter,
+    getGoogleBooks,
+    addGoogleBook,
+    addReview,
+    getReviews,
+    deleteReview,
 }
 
-// async function query(filterBy = {}) {
-//     let books = loadFromStorage(BOOK_KEY) || [] 
-//     if (!Array.isArray(books)) {  
-//         books = []
-//     }
+const STORAGE_KEY = 'bookReviews';
 
-//     if (filterBy.title) {
-//         const regExp = new RegExp(filterBy.title, 'i')
-//         books = books.filter(book => regExp.test(book.title))
-//     }
-//     if (filterBy.minListPrice) {
-//         books = books.filter(book => book.listPrice.amount >= filterBy.minListPrice)
-//     }
 
-//     return Promise.resolve(books)
-// }
+function addReview(bookId, review) {
+    const reviews = loadFromStorage(STORAGE_KEY) || {};
+    if (!reviews[bookId]) reviews[bookId] = [];
+    review.id = makeId(); // שימוש ב-makeId מ-utilService
+    reviews[bookId].push(review);
+    saveToStorage(STORAGE_KEY, reviews); // שימוש ב-saveToStorage מ-utilService
+    return Promise.resolve();
+}
+
+function getReviews(bookId) {
+    const reviews = loadFromStorage(STORAGE_KEY) || {};
+    return Promise.resolve(reviews[bookId] || []);
+}
+
+function deleteReview(bookId, reviewId) {
+    const reviews = loadFromStorage(STORAGE_KEY);
+    if (!reviews[bookId]) return Promise.reject('No reviews found for this book');
+    reviews[bookId] = reviews[bookId].filter(review => review.id !== reviewId);
+    saveToStorage(STORAGE_KEY, reviews);
+    return Promise.resolve();
+}
+
 
 function query(filterBy = {}) {
     return storageService.query(BOOK_KEY)
         .then(books => {
-            if (filterBy.txt) {
-                const regExp = new RegExp(filterBy.txt, 'i')
+            if (filterBy.title) {
+                const regExp = new RegExp(filterBy.title, 'i')
                 books = books.filter(book => regExp.test(book.title))
             }
             if (filterBy.minListPrice) {
@@ -46,11 +61,6 @@ function query(filterBy = {}) {
         })
 }
 
-// async function get(bookId) {
-//     const book = books.find(book => book.id === bookId)
-//     if (!book) return Promise.reject('Book not found') 
-//     return Promise.resolve(_setNextPrevBookId(book))
-// }
 
 function get(bookId) {
     return storageService.get(BOOK_KEY, bookId)
@@ -87,28 +97,65 @@ async function _setNextPrevBookId(book) {
     return book
 }
 
-function _creatBooks() {
+
+function _createBooks() {
     let booksInStorage = loadFromStorage(BOOK_KEY)
     if (!booksInStorage || booksInStorage.length === 0) {
-        saveToStorage(BOOK_KEY, defaultBooks)
+        const updatedBooks = defaultBooks.map((book, i) => ({
+            ...book,
+            thumbnail: `/assets/booksImages/${i + 1}.jpg`
+        }))
+        saveToStorage(BOOK_KEY, updatedBooks)
     }
 }
 
 
-// function _creatBooks() {
-//     let books = loadFromStorage(BOOK_KEY)
-//     if(!books || !books.length) {
-//         books = [
-//             _creatBook('metus hendrerit', '109'),
-//             _creatBook('morbi', '44'),
-//             _creatBook('at viverra venenatis', '108')
-//         ]
-//         saveToStorage(BOOK_KEY, books)
-//     }
-// }
 
-// function _creatBook(title, listPrice) {
-//     const book = getEmptyBook(title, listPrice)
-//     book.id = makeId()
-//     return book
-// }
+function addGoogleBook(book) {
+    return storageService.post(BOOK_KEY, book, false)
+}
+const gCache = {}
+function getGoogleBooks(bookName) {
+    if (bookName === '') return Promise.resolve()
+    const googleBooks = gCache[bookName]
+    if (googleBooks) {
+        console.log('data from storage...', googleBooks)
+        return Promise.resolve(googleBooks)
+    }
+
+    const url = `https://www.googleapis.com/books/v1/volumes?printType=books&q=${bookName}`
+    return axios.get(url)
+        .then(res => {
+            const data = res.data.items
+            console.log('data from network...', data)
+            const books = _formatGoogleBooks(data)
+            gCache[bookName] = books
+            utilService.saveToStorage(CACHE_STORAGE_KEY, gCache)
+            return books
+        })
+}
+
+
+function _formatGoogleBooks(googleBooks) {
+    return googleBooks.map(googleBook => {
+        const { volumeInfo } = googleBook
+        const book = {
+            id: googleBook.id,
+            title: volumeInfo.title,
+            description: volumeInfo.description,
+            pageCount: volumeInfo.pageCount,
+            authors: volumeInfo.authors,
+            categories: volumeInfo.categories,
+            publishedDate: volumeInfo.publishedDate,
+            language: volumeInfo.language,
+            listPrice: {
+                amount: utilService.getRandomIntInclusive(80, 500),
+                currencyCode: "EUR",
+                isOnSale: Math.random() > 0.7
+            },
+            reviews: []
+        }
+        if (volumeInfo.imageLinks) book.thumbnail = volumeInfo.imageLinks.thumbnail
+        return book
+    })
+}

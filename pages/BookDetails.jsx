@@ -1,18 +1,23 @@
 import { bookService } from "../services/book.service.js";
-import { BookLongTxt } from "../cmps/BookLongTxt.jsx"
+import { BookLongTxt } from "../cmps/BookLongTxt.jsx";
+import { AddReview } from "../cmps/AddReview.jsx";
 
 const { useState, useEffect } = React
-const { useParams, useNavigate, Link } = ReactRouterDOM
+const { useParams, useNavigate } = ReactRouter
+const { Link } = ReactRouterDOM
 
 export function BookDetails() {
 
     const [book, setBook] = useState(null)
+    const [reviews, setReviews] = useState([]);
+    
     const params = useParams()
     const navigate = useNavigate()
-    // console.log(params);
+    
     
     useEffect(() => {
-        loadBook()
+        loadBook();
+        loadReviews();
     }, [params.bookId])
 
     function loadBook() {
@@ -24,35 +29,88 @@ export function BookDetails() {
             })
     }
 
-    function onBack() {
-        navigate('/book')
-       
+    function loadReviews() {
+        bookService.getReviews(params.bookId)
+            .then(reviews => setReviews(reviews))
+            .catch(err => console.error("Error fetching reviews:", err));
     }
+
+    function handleAddReview() {
+        loadReviews();
+    }
+
+    function handleDeleteReview(reviewId) {
+        bookService.deleteReview(params.bookId, reviewId)
+            .then(() => loadReviews())
+            .catch(err => console.error("Error deleting review:", err));
+    }
+
+    function getStars(rating) {
+    return '⭐'.repeat(rating);
+}
+
     
     if (!book) return <div className="loader">Loading...</div>
-    return (
-        <section className="car-details">
-            <h1>Book title: {book.title}</h1>
-            <h1>
-            Book Price: <span style={{ color: book.listPrice.amount > 150 ? "red" : book.listPrice.amount < 20 ? "green" : "black", marginLeft: "5px" }}>
-                    {book.listPrice.amount} {book.listPrice.currencyCode}</span>
-                   {book.listPrice.isOnSale && <span style={{ color: "rgba(12, 115, 184, 0.66)", fontWeight: "bold", marginLeft: "10px", textDecoration: "underline" }}> On Sale!</span>}
-            </h1>
-            {/* <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis quae fuga eveniet, quisquam ducimus modi optio in alias accusantium corrupti veritatis commodi tenetur voluptate deserunt nihil quibusdam. Expedita, architecto omnis?</p> */}
-            {/* <img src={`../assets/img/${car.vendor}.png`} alt="car-image" /> */}
+    const priceClass = book.listPrice.amount > 150 ? 'high-price' : book.listPrice.amount < 20 ? 'low-price' : 'mid-price';
+    const publishedDateClass = book.publishedDate >= 10 ? 'vintage' : book.publishedDate <= 1 ? 'new' : '';
+    const pageCountClass = book.pageCount < 100 ? 'light': book.pageCount > 200 && book.pageCount < 500 ? 'descent':  book.pageCount > 500 ? 'serious': '';
 
-            <p>
-                page count: {book.pageCount} {book.pageCount < 100 ? "-Light Reading": book.pageCount > 200 && book.pageCount < 500 ? "-Descent Reading":  book.pageCount > 500 ? " -Serious Reading": ""}
+    return (
+        <article className='book-details'>
+            {<nav className='book-details-nav'>
+                <Link to={`/book/${book.prevBookId}`}><button><i className="fa-solid fa-arrow-left"></i></button></Link>
+                <Link to={`/book/${book.nextBookId}`}><button><i class="fa-solid fa-arrow-right"></i></button></Link>   
+            </nav> }
+
+            <h2>{book.title}</h2>
+
+            <p className={priceClass}>
+             <span className='bold-txt'>Price: </span>
+                {book.listPrice.amount} {book.listPrice.currencyCode}
             </p>
-            <p>
-                published Date: {book.publishedDate} {(new Date().getFullYear() - book.publishedDate) > 10 ? "-Vintage": (new Date().getFullYear() - book.publishedDate) <= 1 ? "-New": "" }
-            </p>
-            <button onClick={onBack}>Back</button>
+
+            <h3>Author: {book.authors}</h3>
+
+            <h3>Categoric: <span>{book.categories}</span></h3>
+
+            <img className="book-img" src={book.thumbnail} alt="" />
+
+            <h3>
+                Published Date: {book.publishedDate}
+                <span className={publishedDateClass}> {(new Date().getFullYear() - book.publishedDate) > 10 ? "-Vintage": (new Date().getFullYear() - book.publishedDate) <= 1 ? "-New": "" }</span>
+            </h3>
+            <h3>
+                Page Count: {book.pageCount} 
+                <span className={pageCountClass}>{book.pageCount < 100 ? " -Light Reading": book.pageCount > 200 && book.pageCount < 500 ? " -Descent Reading":  book.pageCount > 500 ? " -Serious Reading": ""}</span>
+            </h3>
+
+            <h3>Language: {book.language}</h3>
+
+            <h3 className="description-title">Description: </h3>
             <p><BookLongTxt txt = {book.description}/></p>
-            <section>
-                <button ><Link to={`/book/${book.prevBookId}`}>Prev book</Link></button>
-                <button ><Link to={`/book/${book.nextBookId}`}>Next book</Link></button>
-            </section>
-        </section>
+
+            {book.listPrice.isOnSale && <img className="on-sale-icon" src="/assets/booksImages/sale-icon.png.png" alt="on sale icon" /> }
+
+            <AddReview bookId={params.bookId} onAddReview={handleAddReview} />
+
+            <h3>Reviews:</h3>
+            {reviews.length > 0 ? (
+                <ul>
+                    {reviews.map((review) => (
+                        <li key={review.id}>
+                            <p>Full Name: <strong>{review.fullname}</strong></p>
+                            <p>Read At: <strong>({review.readAt})</strong></p>
+                            <p>Rating: {getStars(review.rating)}</p>
+
+                            <button className="delete-btn" onClick={() => handleDeleteReview(review.id)}>Delete</button>
+                        </li>
+                    ))}
+                </ul>
+            ): (<p> No reviews yet.. </p>)}
+
+            <button className='close'>
+                <Link to='/book'>X</Link>
+            </button>
+        </article>
     )
 }

@@ -1,0 +1,22 @@
+.book-long-txt {
+    width: 100%;
+    padding-inline: 1em;
+}
+
+.book-long-txt p.txt  {
+    margin-bottom: .5em;
+    font-weight: 520;
+}
+
+.toggle-btn {
+    background-color: transparent;
+    border: none;
+    padding-inline: 0;
+    color: rgba(0, 0, 0, 0.6);
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.toggle-btn:hover {
+    text-decoration: underline;
+}
