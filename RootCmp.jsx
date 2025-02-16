@@ -6,25 +6,29 @@ import { HomePage } from "./pages/HomePage.jsx"
 import { AboutUs } from "./pages/AboutUs.jsx"
 import { BookIndex } from "./pages/BookIndex.jsx"
 import { BookDetails } from "./pages/BookDetails.jsx"
-import { BookLongTxt } from "./cmps/BookLongTxt.jsx"
+import { UserMsg } from "./cmps/UserMsg.jsx"
+import { BookAdd } from "./cmps/BookAdd.jsx"
+import { BookEdit } from "./pages/BookEdit.jsx"
+
 
 
 export function RootCmp() {
     return (
         <Router>
-            <section className="app">
-                <AppHeader />
-                <main className="main-layout">
-                    <Routes>
-                        <Route path="/" element={<Navigate to="/HomePage" />} />
-                        <Route path="/HomePage" element={<HomePage />} />
-                        <Route path="/about" element={<AboutUs />} />
-                        <Route path="/book" element={<BookIndex />} />
-                        <Route path="/book/:bookId" element={<BookDetails />} />
-                        <Route path ="/book" element={<BookLongTxt />}  />
-                    </Routes>
-                </main>
-            </section>
+            <AppHeader />
+            <main className="content-grid">
+                <Routes>
+                    <Route path="/" element={<Navigate to="/HomePage" />} />
+                    <Route path="/HomePage" element={<HomePage />} />
+                    <Route path="/about" element={<AboutUs />} />
+                    <Route path="/book" element={<BookIndex />} />
+                    <Route path="/book/:bookId" element={<BookDetails />} />
+                    <Route path="/add-book" element={<BookAdd />} />
+                    <Route path="/book/edit/:bookId" element={<BookEdit />} />
+                    <Route path="/book/edit" element={<BookEdit/>} />
+                </Routes>
+            </main>
+            <UserMsg />
         </Router>
     )
 }

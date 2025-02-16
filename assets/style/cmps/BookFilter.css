@@ -1,0 +1,28 @@
+.book-filter {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    background: linear-gradient(-225deg, rgb(216, 245, 169) 30%, #a8e2a7 100%);
+    padding: 10px; 
+    margin-block: .5em 1em;
+    border-radius: 5px;
+}
+
+.book-filter label {
+    padding: 5px; 
+}
+
+.book-filter button {
+    margin-left: 10px;
+    background-color: rgb(75, 141, 94);
+    color: white;
+    border: none;
+    padding: 3px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.book-filter button:hover {
+    background-color: rgb(47, 110, 65); 
+    transform: scale(1.1);
+}
