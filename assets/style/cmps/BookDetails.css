@@ -20,7 +20,7 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 10px; /* רווח בין הפריטים */
+    gap: 10px; 
     padding: 0;
     list-style: none;
 }

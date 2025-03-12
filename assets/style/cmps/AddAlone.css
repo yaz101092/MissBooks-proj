@@ -1,0 +1,28 @@
+.add-alone {
+    justify-self: center;
+    margin-block-start: 30px;
+    padding: 20px;
+    background-color: rgba(180, 188, 204, 0.514);
+}
+
+.add-alone form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 20px;
+    width: 400px;
+    gap: 10px;
+    margin-block-start: 20px;
+}
+
+.add-alone form input {
+    width: 200px;
+}
+
+.add-alone form button {
+    justify-self: center;
+    grid-column: 1/-1;
+}
+
+.add-alone h2 {
+    margin-block-end: 20px;
+}

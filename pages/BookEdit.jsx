@@ -21,18 +21,10 @@ export function BookEdit() {
                 .then(setBook)
                 .catch(err => {
                     console.log('Error loading book:', err)
-                    navigate('/book') // במקרה של שגיאה חזרה לרשימת הספרים
+                    navigate('/book')
                 })
         }
     }, [bookId])
-
-    // function handleChange({ target }) {
-    //     const {name:field, type, checked } = target
-    //     const fieldValue = type === 'checkbox' ? checked : value
-    //     setBook((prevBook) => ({ ...prevBook, listPrice: {...prevBook.listPrice, [field]: value} }))
-    // }
-
-    // const { amount, isOnSale } = listPrice
 
     function handleChange({ target }) {
         const { type, name: field } = target

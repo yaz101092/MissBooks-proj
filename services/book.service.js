@@ -1,5 +1,5 @@
 import { storageService } from "./async-storage.service.js"
-import { loadFromStorage, makeId, saveToStorage } from './util.service.js'
+import { loadFromStorage, makeId, saveToStorage, getRandomIntInclusive } from './util.service.js'
 import {  books as defaultBooks } from "../assets/data/books.js"
 import axios from 'axios';
 
@@ -21,20 +21,20 @@ export const bookService = {
     deleteReview,
 }
 
-const STORAGE_KEY = 'bookReviews';
+const STORAGE_KEY = 'bookReviews'
 
 function addReview(bookId, review) {
-    const reviews = loadFromStorage(STORAGE_KEY) || {};
-    if (!reviews[bookId]) reviews[bookId] = [];
-    review.id = makeId(); // שימוש ב-makeId מ-utilService
-    reviews[bookId].push(review);
-    saveToStorage(STORAGE_KEY, reviews); // שימוש ב-saveToStorage מ-utilService
-    return Promise.resolve();
+    const reviews = loadFromStorage(STORAGE_KEY) || {}
+    if (!reviews[bookId]) reviews[bookId] = []
+    review.id = makeId()
+    reviews[bookId].push(review)
+    saveToStorage(STORAGE_KEY, reviews)
+    return Promise.resolve()
 }
 
 function getReviews(bookId) {
-    const reviews = loadFromStorage(STORAGE_KEY) || {};
-    return Promise.resolve(reviews[bookId] || []);
+    const reviews = loadFromStorage(STORAGE_KEY) || {}
+    return Promise.resolve(reviews[bookId] || [])
 }
 
 function deleteReview(bookId, reviewId) {
@@ -72,9 +72,9 @@ function remove(bookId) {
 
 function save(book) {
     if (book.id) {
-        return saveToStorage.put(BOOK_KEY, book)
+        return storageService.put(BOOK_KEY, book)
     } else {
-        return saveToStorage.post(BOOK_KEY, book)
+        return storageService.post(BOOK_KEY, book)
     }
 }
 
@@ -113,14 +113,17 @@ function _createBooks() {
 function addGoogleBook(book) {
     return storageService.post(BOOK_KEY, book, false)
 }
-const gCache = {}
+
+
+//const gCache = {}
 function getGoogleBooks(bookName) {
+    console.log('in GetGoogleBooks')
     if (bookName === '') return Promise.resolve()
-    const googleBooks = gCache[bookName]
-    if (googleBooks) {
-        console.log('data from storage...', googleBooks)
-        return Promise.resolve(googleBooks)
-    }
+    //const googleBooks = gCache[bookName]
+    //if (googleBooks) {
+      //  console.log('data from storage...', googleBooks)
+      //  return Promise.resolve(googleBooks)
+   // }
 
     const url = `https://www.googleapis.com/books/v1/volumes?printType=books&q=${bookName}`
     return axios.get(url)
@@ -128,8 +131,8 @@ function getGoogleBooks(bookName) {
             const data = res.data.items
             console.log('data from network...', data)
             const books = _formatGoogleBooks(data)
-            gCache[bookName] = books
-            utilService.saveToStorage(CACHE_STORAGE_KEY, gCache)
+            //gCache[bookName] = books
+            //utilService.saveToStorage(CACHE_STORAGE_KEY, gCache)
             return books
         })
 }
@@ -148,7 +151,7 @@ function _formatGoogleBooks(googleBooks) {
             publishedDate: volumeInfo.publishedDate,
             language: volumeInfo.language,
             listPrice: {
-                amount: utilService.getRandomIntInclusive(80, 500),
+                amount: getRandomIntInclusive(80, 500),
                 currencyCode: "EUR",
                 isOnSale: Math.random() > 0.7
             },

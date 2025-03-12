@@ -20,7 +20,6 @@
     width: 50px;
     top: 70px;  
     left: 50px; 
-    /* transform: rotate(-20deg); */
     z-index: 2; 
 }
 
@@ -48,21 +47,4 @@
     
 } */
 
-/* .on-sale-icon {
-    position: absolute;
-    width: 50px; ]
-    top: 5px;
-    right: 5px;
-    transform: rotate(-20deg);
-    z-index: 2;
-} */
-
-/* .on-sale-icon {
-    position: absolute;
-    width: 100px;
-    top: 20%;
-    transform: rotate(-30deg);
-    right: 0px;
-    bottom: 0px;
-} */
 
