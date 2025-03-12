@@ -1,6 +1,5 @@
 export function BookPreview({ book }) {
     const {  listPrice } = book
-    // const { amount, currencyCode, isOnSale } = listPrice
     return <article className="book-preview">
             <h3>{book.title}</h3> 
             <img src={book.thumbnail} alt={book.title} />
