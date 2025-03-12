@@ -19,6 +19,7 @@ function get(entityType, entityId) {
     })
 }
 
+
 function post(entityType, newEntity) {
     newEntity = { ...newEntity }
     newEntity.id = _makeId()
@@ -28,6 +29,8 @@ function post(entityType, newEntity) {
         return newEntity
     })
 }
+
+
 
 function put(entityType, updatedEntity) {
     return query(entityType).then(entities => {
@@ -47,9 +50,6 @@ async function remove(entityType, entityId) {
     _save(entityType, entities)
     
 }
-
-
-
 
 // Private functions
 

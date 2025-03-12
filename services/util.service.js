@@ -1,3 +1,10 @@
+export const utilService = {
+    makeId,
+    getRandomIntInclusive,
+    saveToStorage,
+    loadFromStorage,
+}
+
 export function makeId(length = 6) {
     var title = ''
     var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'

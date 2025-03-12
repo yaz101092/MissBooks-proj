@@ -8,8 +8,10 @@
 
 @import 'RootCmp.css';
 @import './cmps/Home.css';
-
+@import './cmps/About.css';
 @import './cmps/BookEdit.css';
+
+
 @import './cmps/AddReviwe.css';
 @import './cmps/BookIndex.css';
 @import './cmps/BookDetails.css';
@@ -19,4 +21,4 @@
 @import './cmps/BookLongTxt.css';
 @import "./cmps/AppHeader.css";
 @import "./cmps/BookAdd.css";
-
+Q

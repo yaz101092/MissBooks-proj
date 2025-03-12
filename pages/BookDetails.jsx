@@ -89,7 +89,7 @@ export function BookDetails() {
             <h3 className="description-title">Description: </h3>
             <p><BookLongTxt txt = {book.description}/></p>
 
-            {book.listPrice.isOnSale && <img className="on-sale-icon" src="/assets/booksImages/sale-icon.png.png" alt="on sale icon" /> }
+            {book.listPrice.isOnSale && <img className="on-sale-icon" src="\assets\booksImages\sale-icon.png" alt="on sale icon" />}
 
             <AddReview bookId={params.bookId} onAddReview={handleAddReview} />
 

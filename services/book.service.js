@@ -1,7 +1,7 @@
 import { storageService } from "./async-storage.service.js"
 import { loadFromStorage, makeId, saveToStorage } from './util.service.js'
 import {  books as defaultBooks } from "../assets/data/books.js"
-import axios from 'axios';
+// import axios from 'axios';
 
 
 const BOOK_KEY = 'books'
@@ -73,9 +73,9 @@ function remove(bookId) {
 
 function save(book) {
     if (book.id) {
-        return saveToStorage.put(BOOK_KEY, book)
+        return storageService.put(BOOK_KEY, book)
     } else {
-        return saveToStorage.post(BOOK_KEY, book)
+        return storageService.post(BOOK_KEY, book)
     }
 }
 
