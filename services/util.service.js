@@ -9,11 +9,7 @@ export function makeId(length = 6) {
     return title
 }
 
-<<<<<<< HEAD
 export function getRandomIntInclusive(min, max) {
-=======
-function getRandomIntInclusive(min, max) {
->>>>>>> 91c56d9f990f5cb32f7b684a602a6d6ef61aabe3
     min = Math.ceil(min)
     max = Math.floor(max)
     return Math.floor(Math.random() * (max - min + 1)) + min //The maximum is inclusive and the minimum is inclusive 

@@ -24,11 +24,7 @@
     content: "Loading...";
 }
 
-<<<<<<< HEAD
 /* @keyframes l16 {
-=======
-@keyframes l16 {
->>>>>>> 91c56d9f990f5cb32f7b684a602a6d6ef61aabe3
     20% {
         text-shadow:
             calc(-1*var(--w)) 0,
@@ -80,8 +76,4 @@
             calc(-8*var(--w)) 0 #63fff4,
             calc(-9*var(--w)) 0;
     }
-<<<<<<< HEAD
 } */
-=======
-}
->>>>>>> 91c56d9f990f5cb32f7b684a602a6d6ef61aabe3
