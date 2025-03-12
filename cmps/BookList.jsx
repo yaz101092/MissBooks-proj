@@ -2,11 +2,6 @@ import { BookPreview } from "./BookPreview.jsx";
 const { Link } = ReactRouterDOM
 
 export function BookList({ books, onRemoveBook }) {
-
-    // const ulAttributes = {
-    //     title: 'Some Pop Up',
-    //     className: 'book-list'
-    // }
     
     return (
         <section className="books-list">

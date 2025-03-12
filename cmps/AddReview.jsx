@@ -1,6 +1,5 @@
 const {useState} = React
 
-// import React from 'react';
 import { bookService } from '../services/book.service.js'
 
 export function AddReview({ bookId, onAddReview }) {
@@ -97,90 +96,3 @@ export function AddReview({ bookId, onAddReview }) {
     );
 }
 
-    // return (
-    //     <section className="Add-Review">
-    //         <button>Add a Review</button>
-    //         <form onSubmit={handleSubmit}>
-    //             <label>
-    //                 Full Name:
-    //                 <input
-    //                     type="text"
-    //                     name="fullname"
-    //                     value={review.fullname}
-    //                     onChange={handleChange}
-    //                     required
-    //                 />
-    //             </label>
-
-    //             <label>
-    //                 Rating:
-    //                 <select name="rating" value={review.rating} onChange={handleChange}>
-    //                     {[1, 2, 3, 4, 5].map((num) => (
-    //                         <option key={num} value={num}>
-    //                             {num} ⭐
-    //                         </option>
-    //                     ))}
-    //                 </select>
-    //             </label>
-
-    //             <label>
-    //                 Read At:
-    //                 <input type="date" name="readAt" value={review.readAt} onChange={handleChange} required />
-    //             </label>
-
-    //             <button type="submit">Submit Review</button>
-    //         </form>
-    //     </section>
-    // );
-
-//     return (
-//         <section className="Add-Review">
-//             <button onClick={() => setIsReviewOpen(true)}>Add a Review</button>
-
-//             {isReviewOpen && (
-//                 <div className="modal">
-//                     <div className="modal-content">
-//                         <button onClick={() => setIsReviewOpen(false)} className="close-btn">X</button>
-//                         <h3>Add a Review</h3>
-//                         <form onSubmit={handleSubmit}>
-//                             <label>
-//                                 Full Name:
-//                                 <input
-//                                     type="text"
-//                                     name="fullname"
-//                                     value={review.fullname}
-//                                     onChange={handleChange}
-//                                     required
-//                                 />
-//                             </label>
-
-//                             <label>
-//                                 Rating:
-//                                 <select name="rating" value={review.rating} onChange={handleChange}>
-//                                     {[1, 2, 3, 4, 5].map((num) => (
-//                                         <option key={num} value={num}>
-//                                             {num} ⭐
-//                                         </option>
-//                                     ))}
-//                                 </select>
-//                             </label>
-
-//                             <label>
-//                                 Read At:
-//                                 <input
-//                                     type="date"
-//                                     name="readAt"
-//                                     value={review.readAt}
-//                                     onChange={handleChange}
-//                                     required
-//                                 />
-//                             </label>
-
-//                             <button type="submit">Submit Review</button>
-//                         </form>
-//                     </div>
-//                 </div>
-//             )}
-//         </section>
-//     );
-// }
