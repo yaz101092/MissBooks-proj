@@ -20,6 +20,10 @@
     width: 50px;
     top: 70px;  
     left: 50px; 
+<<<<<<< HEAD
+=======
+    /* transform: rotate(-20deg); */
+>>>>>>> 91c56d9f990f5cb32f7b684a602a6d6ef61aabe3
     z-index: 2; 
 }
 
@@ -47,4 +51,24 @@
     
 } */
 
+<<<<<<< HEAD
+=======
+/* .on-sale-icon {
+    position: absolute;
+    width: 50px; ]
+    top: 5px;
+    right: 5px;
+    transform: rotate(-20deg);
+    z-index: 2;
+} */
+
+/* .on-sale-icon {
+    position: absolute;
+    width: 100px;
+    top: 20%;
+    transform: rotate(-30deg);
+    right: 0px;
+    bottom: 0px;
+} */
+>>>>>>> 91c56d9f990f5cb32f7b684a602a6d6ef61aabe3
 

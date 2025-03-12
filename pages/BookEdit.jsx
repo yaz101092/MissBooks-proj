@@ -4,6 +4,7 @@ const { useState, useEffect } = React;
 const { useParams, useNavigate } = ReactRouter;
 
 export function BookEdit() {
+<<<<<<< HEAD
     const [book, setBook] = useState({
         title: '',
         author: '',
@@ -25,6 +26,50 @@ export function BookEdit() {
                 })
         }
     }, [bookId])
+=======
+    const [book, setBook] = useState(bookService.getEmptyBook())
+    const params = useParams()
+    const navigate = useNavigate()
+
+    // useEffect(() => {
+    //     if (params.bookId) {
+    //         bookService.get(bookId)
+    //             .then(setBook)
+    //             .catch(err => {
+    //                 console.log('Error loading book:', err)
+    //                 navigate('/book') 
+    //             })
+    //     }
+    // }, [bookId])
+
+    useEffect(() => {
+        if (params.bookId) loadBook()
+    }, [])
+
+    function loadBook() {
+        bookService.get(params.bookId)
+            .then(setBook)
+            .catch(err => {
+                console.log('err:', err)
+            })
+    }
+
+    function onSaveBook(ev) {
+        ev.preventDefault()
+        bookService.save(book)
+            .then(() => console.log('Book has successfully saved!'))
+            .catch((err) => console.log(`couldn't save book -`, err))
+            .finally(() => navigate('/book'))
+    }
+
+    // function handleChange({ target }) {
+    //     const {name:field, type, checked } = target
+    //     const fieldValue = type === 'checkbox' ? checked : value
+    //     setBook((prevBook) => ({ ...prevBook, listPrice: {...prevBook.listPrice, [field]: value} }))
+    // }
+
+    // const { amount, isOnSale } = listPrice
+>>>>>>> 91c56d9f990f5cb32f7b684a602a6d6ef61aabe3
 
     function handleChange({ target }) {
         const { type, name: field } = target
@@ -64,6 +109,7 @@ export function BookEdit() {
         }))
     }
 
+<<<<<<< HEAD
     function onSaveBook(ev) {
         ev.preventDefault()
         bookService.save(book)
@@ -78,6 +124,31 @@ export function BookEdit() {
     return (
         <section className="book-edit">
             <h2>{bookId ? 'Edit Book' : 'Add New Book'}</h2>
+=======
+    // function onSaveBook(ev) {
+    //     ev.preventDefault()
+    //     bookService.save(book)
+    //         .then(() => {
+    //             navigate('/book')
+    //         })
+    //         .catch(err => {
+    //             console.error('Error saving book:', err)
+    //         })
+    // }
+
+    const {
+        title,
+        authors,
+        listPrice,
+        description,
+        pageCount,
+    } = book
+
+
+    return (
+        <section className="book-edit">
+            <h2>{params ? 'Edit Book' : 'Add New Book'}</h2>
+>>>>>>> 91c56d9f990f5cb32f7b684a602a6d6ef61aabe3
             <form onSubmit={onSaveBook}>
                 <label>
                     Title:
@@ -86,12 +157,20 @@ export function BookEdit() {
 
                 <label>
                     Author:
+<<<<<<< HEAD
                     <input type="text" name="author" value={book.author} onChange={handleChange} required />
+=======
+                    <input type="text"  name="authors" value={book.authors} onChange={handleChange} required />
+>>>>>>> 91c56d9f990f5cb32f7b684a602a6d6ef61aabe3
                 </label>
 
                 <label>
                     Price:
+<<<<<<< HEAD
                     <input type="number" name="price" value={book.price} onChange={handleChangeListPrice} required />
+=======
+                    <input type="number"  name="amount" value={listPrice.amount} onChange={handleChangeListPrice} required />
+>>>>>>> 91c56d9f990f5cb32f7b684a602a6d6ef61aabe3
                 </label>
 
                 <label>
